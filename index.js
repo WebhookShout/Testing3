@@ -88,7 +88,7 @@ export default {
     }
 
     // Create Link
-    if (pathname && pathname === "/create" && message) {
+    if (pathname && pathname === "create" && message) {
       const json = JSON.stringify({
         "message": message,
         "expired": false
