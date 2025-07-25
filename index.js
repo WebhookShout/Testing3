@@ -252,7 +252,7 @@ export default {
     }
 
     try {
-      resultDiv.innerHTML = \`<a href="Hi" target="_blank" rel="noopener noreferrer">Hi</a>\`;
+      resultDiv.textContent = "Hii";
     } catch (error) {
       resultDiv.textContent = 'Error: ' + error.message;
     }
