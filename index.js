@@ -230,7 +230,34 @@ export default {
   </div>
 
   <script>
-  document.getElementById('generateBtn').addEventListener('click', async () => {
+  const ServiceKey = "AdRa-hXtp-44pk-uopl-cVIp-QdG1-Dnh1-adO0-russ-1ov3";
+  const base32Alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+
+  function toBase32(bytes) {
+    let bits = 0, value = 0, output = '';
+    for (let byte of bytes) {
+      value = (value << 8) | byte;
+      bits += 8;
+      while (bits >= 5) {
+        output += base32Alphabet[(value >>> (bits - 5)) & 31];
+        bits -= 5;
+      }
+    }
+    if (bits > 0) {
+      output += base32Alphabet[(value << (5 - bits)) & 31];
+    }
+    return output;
+  }
+
+  function EncodeText(text, key) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(text);
+    const keyData = encoder.encode(key);
+    const encrypted = data.map((b, i) => b ^ keyData[i % keyData.length]);
+    return toBase32(encrypted);
+  }
+
+  document.getElementById('generateBtn').addEventListener('click', () => {
     const message = document.getElementById('message').value.trim();
     const resultDiv = document.getElementById('result');
 
@@ -239,12 +266,10 @@ export default {
       return;
     }
 
-    resultDiv.textContent = 'Generating link...';
-
     try {
-      const encoded = `${EncodeText("Hi", ServiceKey)}`;
-      const link = "${location.origin}/access?auth=encoded";
-      resultDiv.innerHTML = "<a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>";
+      const encoded = EncodeText(message, ServiceKey);
+      const link = `${location.origin}/access?auth=${encoded}`;
+      resultDiv.innerHTML = `<a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>`;
     } catch (error) {
       resultDiv.textContent = 'Error: ' + error.message;
     }
