@@ -267,9 +267,7 @@ export default {
     }
 
     try {
-      const encoded = EncodeText(message, ServiceKey);
-      const link = "${domain}/${url.pathname.slice(1)}/access?auth=${encoded}";
-      resultDiv.innerHTML = "<a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>";
+      resultDiv.textContent = '${domain}/${url.pathname.slice(1)}/access?auth=${EncodeText("Hi", ServiceKey)}';
     } catch (error) {
       resultDiv.textContent = 'Error: ' + error.message;
     }
