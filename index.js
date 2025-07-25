@@ -230,7 +230,7 @@ export default {
   </div>
 
   <script>
-    document.getElementById('generateBtn').addEventListener('click', async () => {
+  document.getElementById('generateBtn').addEventListener('click', async () => {
     const message = document.getElementById('message').value.trim();
     const resultDiv = document.getElementById('result');
 
@@ -242,9 +242,9 @@ export default {
     resultDiv.textContent = 'Generating link...';
 
     try {
-      const encoded = EncodeText(message, ServiceKey);
-      const link = `${location.origin}/access?auth=${encoded}`;
-      resultDiv.innerHTML = `<a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>`;
+      const encoded = `${EncodeText("Hi", ServiceKey)}`;
+      const link = "${location.origin}/access?auth=encoded";
+      resultDiv.innerHTML = "<a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>";
     } catch (error) {
       resultDiv.textContent = 'Error: ' + error.message;
     }
