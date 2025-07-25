@@ -271,7 +271,7 @@ export default {
 </html>`
     
     return new Response(homepage, {
-       headers: { "Content-Type": "text/plain" }
+       headers: { "Content-Type": "text/html" }
     });
   }
 }
