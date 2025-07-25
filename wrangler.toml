@@ -1,4 +1,4 @@
-name = "one-time-link-generator"
+name = "generate"
 main = "index.js"
 compatibility_date = "2025-07-25"
 workers_dev = true
