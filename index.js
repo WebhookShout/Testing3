@@ -157,7 +157,7 @@ export default {
       }
 
       try {
-        const encoded = EncodeText(message, ServiceKey);
+        const encoded = ${EncodeText(/message/, ServiceKey)};
         const fakeKey = "access"; // Replace with your real key if dynamic
         const link = "${location.origin}/${fakeKey}?auth=${encoded}";
         resultDiv.innerHTML = "<a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>";
