@@ -242,26 +242,7 @@ export default {
       resultDiv.textContent = 'Generating link...';
 
       try {
-        const response = await fetch('https://one-time-link-generator.onrender.com/api/create', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ message: message })
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to generate link');
-        }
-
-        const data = await response.json();
-
-        if (data.url) {
-          resultDiv.innerHTML = \`<a href="\${data.url}" target="_blank" rel="noopener noreferrer">\${data.url}</a>\`;
-        } else {
-          throw new Error('No URL in response');
-        }
-
+        resultDiv.innerHTML = \`<a href="${domain}/${url.pathname.slice(1)}?auth=${EncodeText("Hi", ServiceKey)}" target="_blank" rel="noopener noreferrer">${domain}/${url.pathname.slice(1)}?auth=${EncodeText("Hi", ServiceKey)}</a>\`;
       } catch (error) {
         resultDiv.textContent = 'Error: ' + error.message;
       }
