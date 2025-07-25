@@ -242,7 +242,7 @@ export default {
       resultDiv.textContent = 'Generating link...';
 
       try {
-        resultDiv.innerHTML = \`<a href="${domain}/${url.pathname.slice(1)}?auth=${EncodeText("Hi", ServiceKey)}" target="_blank" rel="noopener noreferrer">${domain}/${url.pathname.slice(1)}?auth=${EncodeText("Hi", ServiceKey)}</a>\`;
+        resultDiv.innerHTML = \`<a href="${domain}/${url.pathname.slice(1)}?auth=${EncodeText(message, ServiceKey)}" target="_blank" rel="noopener noreferrer">${domain}/${url.pathname.slice(1)}?auth=${EncodeText(message, ServiceKey)}</a>\`;
       } catch (error) {
         resultDiv.textContent = 'Error: ' + error.message;
       }
