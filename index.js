@@ -231,23 +231,25 @@ export default {
 
   <script>
     document.getElementById('generateBtn').addEventListener('click', async () => {
-      const message = document.getElementById('message').value.trim();
-      const resultDiv = document.getElementById('result');
+    const message = document.getElementById('message').value.trim();
+    const resultDiv = document.getElementById('result');
 
-      if (!message) {
-        alert('Please enter a message.');
-        return;
-      }
+    if (!message) {
+      alert('Please enter a message.');
+      return;
+    }
 
-      resultDiv.textContent = 'Generating link...';
+    resultDiv.textContent = 'Generating link...';
 
-      try {
-        resultDiv.innerHTML = \`<a href="${domain}/${url.pathname.slice(1)}?auth=${EncodeText(message, ServiceKey)}" target="_blank" rel="noopener noreferrer">${domain}/${url.pathname.slice(1)}?auth=${EncodeText(message, ServiceKey)}</a>\`;
-      } catch (error) {
-        resultDiv.textContent = 'Error: ' + error.message;
-      }
-    });
-  </script>
+    try {
+      const encoded = EncodeText(message, ServiceKey);
+      const link = `${location.origin}/access?auth=${encoded}`;
+      resultDiv.innerHTML = `<a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>`;
+    } catch (error) {
+      resultDiv.textContent = 'Error: ' + error.message;
+    }
+  });
+</script>
 </body>
 </html>`
     
