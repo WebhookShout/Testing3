@@ -259,7 +259,7 @@ export default {
       }
       const data = await response.json();
       
-      resultDiv.textContent = "\${data.message}";
+      resultDiv.textContent = "Hi";
     } catch (error) {
       resultDiv.textContent = 'Error: ' + error.message;
     }
