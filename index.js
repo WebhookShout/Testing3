@@ -54,8 +54,9 @@ export default {
     const domain = url.origin; // get service full link
     const userAgent = request.headers.get('User-Agent') || ''; // get User-Agent    
     const pathname = decodeURIComponent(url.pathname.slice(1)); // remove leading '/'
+    const message = url.searchParams.get("message"); // get key in '?message=Hello'
     const auth = url.searchParams.get("auth"); // get key in '?auth=Key'
-
+    
     // Handle Access
     if (pathname && auth) {
       const key = pathname;
@@ -86,6 +87,17 @@ export default {
       });
     }
 
+    // Create Link
+    if (pathname && pathname === "/create" && message) {
+      const json = JSON.stringify({
+        "message": message,
+        "expired": false
+      })
+      return new Response(json, {
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+    
     // Home Page
     const homepage = `
     <!DOCTYPE html>
