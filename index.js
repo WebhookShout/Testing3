@@ -85,7 +85,193 @@ export default {
         headers: { "Content-Type": "text/plain" }
       });
     }
+
+    // Home Page
+    const homepage = `
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>One Time Link Generator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #121212;
+      color: #eee;
+      margin: 30;
+      padding: 0;
+    }
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+    h1 {
+      margin-bottom: 1rem;
+      font-weight: 500;
+      color: white;
+      font-size: 1.2rem;
+    }
+    textarea {
+      width: 100%;
+      max-width: 500px;
+      height: 100px;
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: none;
+      resize: vertical;
+      background: #222;
+      color: #eee;
+      margin-bottom: 1rem;
+    }
+    button {
+      background: white;
+      border: none;
+      color: #121212;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-bottom: 1rem;
+      width: 200px;
+    }
+    button:hover {
+      background: #ccc;
+    }
+    .result {
+      max-width: 500px;
+      word-break: break-word;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      user-select: all;
+    }
+    a {
+      color: white;
+      text-decoration: none;
+    }
+
+    /* Styles for API Documentation */
+    .doc-container {
+      max-width: 900px;
+      margin: auto;
+      padding: 2rem;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+    .doc-container h1, .doc-container h2 {
+      color: #ffffff;
+    }
+    .doc-container code, .doc-container pre {
+      background-color: #1e1e1e;
+      padding: 5px;
+      border-radius: 5px;
+      display: block;
+      overflow-x: auto;
+      color: #90ee90;
+    }
+    .doc-container section {
+      margin-bottom: 2rem;
+    }
+    .doc-container a {
+      color: #61dafb;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <h1>One Time Link Generator</h1>
+    <textarea id="message" placeholder="Enter your message here..."></textarea>
+    <button id="generateBtn">Generate Link</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <div class="doc-container">
+    <h2>API Documentation</h2>
+
+    <section>
+      <h1>POST /api/create</h1>
+      <p>Generates a one-time-use link from a user-provided message.</p>
+      <h3>Request</h3>
+      <p><strong>URL:</strong> <pre>https://one-time-link-generator.onrender.com/api/create</pre></p>
+      <p><strong>Method:</strong> POST</p>
+      <p><strong>Headers:</strong></p>
+      <pre>{
+  "Content-Type": "application/json"
+}</pre>
+      <p><strong>Body:</strong></p>
+      <pre>{
+  "message": "Your message here"
+}</pre>
+      <h3>Response</h3>
+      <p>Returns a JSON object with a generated one-time link:</p>
+      <pre>{
+  "id": "abc123",
+  "url": "https://one-time-link-generator.onrender.com/use/abc123",
+  "direct_Url": "https://one-time-link-generator.onrender.com/api/use/abc123"
+}</pre>
+    </section>
+
+    <section>
+      <h2>Notes</h2>
+      <ul>
+        <li>Each link can be used only once.</li>
+        <li>After the first visit, the message is deleted from the server.</li>
+        <li>Useful for sharing temporary messages securely.</li>
+      </ul>
+    </section>
+    <footer>
+      <p>© 2025 One Time Link Generator</p>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('generateBtn').addEventListener('click', async () => {
+      const message = document.getElementById('message').value.trim();
+      const resultDiv = document.getElementById('result');
+
+      if (!message) {
+        alert('Please enter a message.');
+        return;
+      }
+
+      resultDiv.textContent = 'Generating link...';
+
+      try {
+        const response = await fetch('https://one-time-link-generator.onrender.com/api/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ message: message })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to generate link');
+        }
+
+        const data = await response.json();
+
+        if (data.url) {
+          resultDiv.innerHTML = \`<a href="\${data.url}" target="_blank" rel="noopener noreferrer">\${data.url}</a>\`;
+        } else {
+          throw new Error('No URL in response');
+        }
+
+      } catch (error) {
+        resultDiv.textContent = 'Error: ' + error.message;
+      }
+    });
+  </script>
+</body>
+</html>`
     
-    return new Response("404: Not Found", { status: 404 });
+    return new Response(homepage, {
+       headers: { "Content-Type": "text/plain" }
+    });
   }
 }
