@@ -252,7 +252,14 @@ export default {
     }
 
     try {
-      resultDiv.textContent = '${domain}/${url.pathname.slice(1)}access?auth=${EncodeText("Hi", ServiceKey)}';
+      const response = await fetch('${domain}/${url.pathname.slice(1)}create?message=${message}');
+      
+      if (!response.ok) {
+        throw new Error('Failed to generate link');
+      }
+      const data = await response.json();
+      
+      resultDiv.textContent = '${domain}/${url.pathname.slice(1)}access?auth=${data.message}';
     } catch (error) {
       resultDiv.textContent = 'Error: ' + error.message;
     }
