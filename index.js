@@ -259,7 +259,7 @@ export default {
       }
       const data = await response.json();
       
-      resultDiv.textContent = "Hi";
+      resultDiv.innerHTML = \`<a href="Hi" target="_blank" rel="noopener noreferrer">Hi</a>\`;
     } catch (error) {
       resultDiv.textContent = 'Error: ' + error.message;
     }
