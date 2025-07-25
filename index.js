@@ -252,7 +252,17 @@ export default {
     }
 
     try {
-      resultDiv.textContent = "Hii";
+      fetch("${domain}/${url.pathname.slice(1)}create?message=\${message}")
+      .then(response => {
+        if (!response.ok) throw new Error("Network response was not ok");
+        return response.json();
+      })
+      .then(data => {
+        document.getElementById("output").textContent = data.message;
+      })
+      .catch(error => {
+        document.getElementById("output").textContent = "Error: " + error.message;
+      });
     } catch (error) {
       resultDiv.textContent = 'Error: ' + error.message;
     }
