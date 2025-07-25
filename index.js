@@ -268,8 +268,8 @@ export default {
 
     try {
       const encoded = EncodeText(message, ServiceKey);
-      const link = `${location.origin}/access?auth=${encoded}`;
-      resultDiv.innerHTML = `<a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>`;
+      const link = "${location.origin}/access?auth=${encoded}";
+      resultDiv.innerHTML = "<a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>";
     } catch (error) {
       resultDiv.textContent = 'Error: ' + error.message;
     }
