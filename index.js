@@ -252,12 +252,7 @@ export default {
     }
 
     try {
-      const response = await fetch('${domain}/${url.pathname.slice(1)}create?message=\${message}', {
-        method: 'GET',
-        headers: {'Content-Type': 'application/json'}
-      });
-      const data = await response.json();
-      resultDiv.textContent = data.message;
+      resultDiv.textContent = "${domain}/${url.pathname.slice(1)}create?message=Hi";
     } catch (error) {
       resultDiv.textContent = 'Error: ' + error.message;
     }
