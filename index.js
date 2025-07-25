@@ -252,13 +252,8 @@ export default {
     }
 
     try {
-      const response = await fetch('${domain}/${url.pathname.slice(1)}create?message=${message}');
-      
-      if (!response.ok) {
-        throw new Error('Failed to generate link');
-      }
-      const data = await response.json();
-      
+      const response = await fetch('${domain}/${url.pathname.slice(1)}create?message=\${message}');
+            
       resultDiv.innerHTML = \`<a href="Hi" target="_blank" rel="noopener noreferrer">Hi</a>\`;
     } catch (error) {
       resultDiv.textContent = 'Error: ' + error.message;
