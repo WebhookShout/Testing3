@@ -55,36 +55,11 @@ export default {
     const userAgent = request.headers.get('User-Agent') || ''; // get User-Agent    
     const pathname = decodeURIComponent(url.pathname.slice(1)); // remove leading '/'
     const message = url.searchParams.get("message"); // get key in '?message=Hello'
-    const auth = url.searchParams.get("auth"); // get key in '?auth=Key'
-    
-    // Handle Access
-    if (pathname && auth) {
-      const key = pathname;
-      const linkData = links[key];
-      const data = JSON.parse(DecodeText(auth, ServiceKey));
-      
-      if (!linkData || !data) {
-        return new Response(`404: Not Found`, { status: 404 });
-      }
 
       // Detect if Access ID is Expired
-      if (data.Expiration < Date.now()) {
-         return new Response(`404: Not Found`, { status: 404 });
+      if (data.Expired === true) {
+         return new Response(`404: Inavalid link or expired!`, { status: 404 });
       }
-      
-      const resp = await fetch(linkData);
-      if (!resp.ok) {
-        return new Response(`${resp.status}: Failed to fetch content`, { status: 500 });
-      }
-
-      const textContent = await resp.text();
-      const content = `game:GetService("ReplicatedStorage"):WaitForChild("${data.Name}").Value = tostring(math.random(1000000, 10000000))\n${textContent}`;
-      const encoded = EncodeScript(content, String(data.Key));
-      const script = `local function Decode(encodedStr, key) local result = {} local parts = string.split(encodedStr, "/") for i = 1, #parts do local byte = tonumber(parts[i]) local k = key:byte(((i - 1) % #key) + 1) local decoded = (byte - k + 256) % 256 table.insert(result, string.char(decoded)) end return table.concat(result) end local a = game local b = "GetService" local c = "ReplicatedStorage" local d = "Destroy" local obj = a[b](a, c)["${data.Name}"] loadstring(Decode("${encoded}", obj.Value))()`;
-      
-      return new Response(script, {
-        headers: { "Content-Type": "text/plain" }
-      });
     }
 
     // Create Link
