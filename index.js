@@ -55,13 +55,8 @@ export default {
     const userAgent = request.headers.get('User-Agent') || ''; // get User-Agent    
     const pathname = decodeURIComponent(url.pathname.slice(1)); // remove leading '/'
     const message = url.searchParams.get("message"); // get key in '?message=Hello'
-
-      // Detect if Access ID is Expired
-      if (data.Expired === true) {
-         return new Response(`404: Inavalid link or expired!`, { status: 404 });
-      }
-    }
-
+    const access = url.searchParams.get("access"); // get key in '?access=id'
+    
     // Create Link
     if (pathname && pathname === "create" && message) {
       const json = JSON.stringify({
@@ -71,6 +66,11 @@ export default {
       return new Response(json, {
         headers: { "Content-Type": "application/json" }
       });
+    }
+
+    // Acess Links
+    if (pathname && pathname === "access" ) {
+      
     }
     
     // Home Page
